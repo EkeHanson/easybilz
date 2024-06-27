@@ -16,9 +16,9 @@ function App() {
     <div>
       <NavBar/>
   {/* <Calltoaction/> */}
-  {<ContactUs/> }
+  {/*<ContactUs/>*/ }
     {/* <Faq/> */}
-  {<Login/> }
+  {/* {<Login/> } */}
   {<Register/> }
   {/* <Review/> */}
   {/* <Services/> */}
