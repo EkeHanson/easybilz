@@ -4,9 +4,12 @@ import topPattern from "../assets/upPattern.png";
 import bottomPattern from "../assets/Patterns.png";
 import logo from "../assets/Logo.png";
 import { TailSpin } from "react-loader-spinner";
-const apiHostname = import.meta.env.VITE_API_HOSTNAME || 'http://127.0.0.1:9090';
+import { Link, useNavigate } from "react-router-dom";
+
+const apiHostname = import.meta.env.VITE_API_HOSTNAME || 'https://easybilz-api.onrender.com';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,6 +17,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetch(`${apiHostname}/user/login/`, {
@@ -32,9 +36,9 @@ const Login = () => {
 
       // Handle successful login, e.g., set user session/token
       console.log("Login successful:", data);
+      navigate("/reg-payment");
       localStorage.setItem("token", data.token);
 
-      // Redirect or update state to show user is logged in
     } catch (err) {
       setError("Invalid email or password. Please try again.");
       console.error("Login error:", err);
@@ -106,14 +110,13 @@ const Login = () => {
                 <div className="container d-flex justify-content-between flex-wrap">
                   <div>
                     <input type="checkbox" />
-                  <span className="ms-2 rem">Remember me</span>
+                    <span className="ms-2 rem">Remember me</span>
                   </div>
                   <div className="">
                     <a href="#" className="forgot">
-                    Forgot password?
-                  </a>
+                      Forgot password?
+                    </a>
                   </div>
-                  
                 </div>
                 <div className="container mt-5 text-center">
                   <button
@@ -133,20 +136,20 @@ const Login = () => {
                 <div className="text-center">
                   <p className="mt-lg-5 mt-md-3 mb-5 pb-5">
                     Don&apos;t have an account? No worries.{" "}
-                    <a className="register fw-bold" href="#">
+                    <Link className="register fw-bold" to="/register">
                       Register now
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>
             </div>
-          <div className="partarn position-absolute bottom-0 start-50 translate-middle-x">
-            <img
-              src={bottomPattern}
-              alt="bottom pattern"
-              className="img-fluid"
-            />
-          </div>
+            <div className="partarn position-absolute bottom-0 start-50 translate-middle-x">
+              <img
+                src={bottomPattern}
+                alt="bottom pattern"
+                className="img-fluid"
+              />
+            </div>
           </div>
         </form>
       </div>

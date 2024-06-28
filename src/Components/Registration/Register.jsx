@@ -1,12 +1,16 @@
+
 import { useState } from "react";
-import "./Register.css";
+// import './RegPayment.css'
 import topPattern from "../assets/upPattern.png";
 import bottomPattern from "../assets/Patterns.png";
 import logo from "../assets/Logo.png";
-import { Link, useNavigate } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
+import {Link, useNavigate } from "react-router-dom";
+
 
 const Register = () => {
+
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [otherNames, setOtherNames] = useState("");
   const [middleName, setMiddleName] = useState("");
@@ -16,10 +20,10 @@ const Register = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const apiHostname = import.meta.env.VITE_API_HOSTNAME || 'http://127.0.0.1:9090';
+  const apiHostname = import.meta.env.VITE_API_HOSTNAME || 'https://easybilz-api.onrender.com';
+
 
   const handleSubmit = async (event) => {
-    const navigate = useNavigate();
     event.preventDefault();
     setLoading(true);
     setError("");
@@ -31,7 +35,8 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(`${apiHostname}/user/create/`, {
+      //const response = await fetch('https://dummyjson.com/users/add', {
+        const response = await fetch(`${apiHostname}/user/create/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,18 +51,14 @@ const Register = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => {
-          throw new Error('Error parsing error response');
-        });
+        const errorData = await response.json();
         console.error('Error details:', errorData);
         throw new Error('Registration failed');
       }
 
-      const data = await response.json().catch(() => {
-        throw new Error('Error parsing success response');
-      });
+      const data = await response.json();
       console.log('Registration successful:', data);
-      navigate("/login");
+      navigate('/login-acount');
 
       // Redirect or update state to show user is registered
     } catch (err) {
@@ -191,15 +192,19 @@ const Register = () => {
               <div className="text-center">
                 <p className="mt-lg-5 mt-md-3 mb-5 pb-3">
                   Already have an account? That&apos;s nice. 
-                  <a className="register fw-bold text-decoration-none" href="signin.html">
-                    Sign In.
-                  </a>
+                  <Link to={'/login-acount'} className="register fw-bold ms-1">
+                    Login
+                  </Link>
                 </p>
               </div>
             </div>
-            <div className="btm-pattern">
-              <img src={bottomPattern} alt="bottom pattern" className="img-fluid" />
-            </div>
+          </div>
+          <div className="partarn position-absolute bottom-0 start-50 translate-middle-x">
+            <img
+              src={bottomPattern}
+              alt="bottom pattern"
+              className="img-fluid"
+            />
           </div>
         </div>
       </form>
@@ -208,3 +213,102 @@ const Register = () => {
 };
 
 export default Register;
+
+
+// import { useState } from 'react';
+// import './PersonalDetails.css';
+// import Register from '../LoginAccount/LoginAcount';
+
+// const Register = ({ onNext }) => {
+//   const [firstName, setFirstName] = useState("");
+//   const [otherNames, setOtherNames] = useState("");
+//   const [middleName, setMiddleName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [confirmPassword, setConfirmPassword] = useState("");
+//   const [error, setError] = useState("");
+
+//   const handleSubmit = (event) => {
+//     event.preventDefault();
+//     if (password !== confirmPassword) {
+//       setError("Passwords do not match");
+//       return;
+//     }
+//     onNext();
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <div className="form-group">
+//         <label htmlFor="fname">First Name</label>
+//         <input
+//           type="text"
+//           className="form-control"
+//           id="fname"
+//           value={firstName}
+//           onChange={(e) => setFirstName(e.target.value)}
+//           required
+//         />
+//       </div>
+//       <div className="form-group">
+//         <label htmlFor="onames">Other Names</label>
+//         <input
+//           type="text"
+//           className="form-control"
+//           id="onames"
+//           value={otherNames}
+//           onChange={(e) => setOtherNames(e.target.value)}
+//           required
+//         />
+//       </div>
+//       <div className="form-group">
+//         <label htmlFor="mname">Middle Name</label>
+//         <input
+//           type="text"
+//           className="form-control"
+//           id="mname"
+//           value={middleName}
+//           onChange={(e) => setMiddleName(e.target.value)}
+//           required
+//         />
+//       </div>
+//       <div className="form-group">
+//         <label htmlFor="email">Email address</label>
+//         <input
+//           type="email"
+//           className="form-control"
+//           id="email"
+//           value={email}
+//           onChange={(e) => setEmail(e.target.value)}
+//           required
+//         />
+//       </div>
+//       <div className="form-group">
+//         <label htmlFor="password">Password</label>
+//         <input
+//           type="password"
+//           className="form-control"
+//           id="password"
+//           value={password}
+//           onChange={(e) => setPassword(e.target.value)}
+//           required
+//         />
+//       </div>
+//       <div className="form-group">
+//         <label htmlFor="confirm-password">Confirm Password</label>
+//         <input
+//           type="password"
+//           className="form-control"
+//           id="confirm-password"
+//           value={confirmPassword}
+//           onChange={(e) => setConfirmPassword(e.target.value)}
+//           required
+//         />
+//       </div>
+//       {error && <div className="alert alert-danger">{error}</div>}
+//       <button type="submit" className="btn btn-primary">Next</button>
+//     </form>
+//   );
+// };
+
+// export default Register;
