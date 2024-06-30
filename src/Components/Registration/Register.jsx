@@ -9,7 +9,6 @@ import {Link, useNavigate } from "react-router-dom";
 
 
 const Register = () => {
-
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [otherNames, setOtherNames] = useState("");
@@ -21,6 +20,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const apiHostname = import.meta.env.VITE_API_HOSTNAME || 'https://easybilz-api.onrender.com';
+  // const apiHostname = import.meta.env.VITE_API_HOSTNAME || 'http://127.0.0.1:9090';
 
 
   const handleSubmit = async (event) => {
@@ -58,11 +58,11 @@ const Register = () => {
 
       const data = await response.json();
       console.log('Registration successful:', data);
-      navigate('/login-acount');
+      navigate('/reg-payment');
 
       // Redirect or update state to show user is registered
     } catch (err) {
-      setError('Registration failed. Please try again.');
+      setError('Registration  . Please try again.');
       console.error('Registration error:', err);
     } finally {
       setLoading(false);
@@ -192,7 +192,7 @@ const Register = () => {
               <div className="text-center">
                 <p className="mt-lg-5 mt-md-3 mb-5 pb-3">
                   Already have an account? That&apos;s nice. 
-                  <Link to={'/login-acount'} className="register fw-bold ms-1">
+                  <Link to={'/login'} className="register fw-bold ms-1">
                     Login
                   </Link>
                 </p>

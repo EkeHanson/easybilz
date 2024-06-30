@@ -7,11 +7,13 @@ import { TailSpin } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 
 const apiHostname = import.meta.env.VITE_API_HOSTNAME || 'https://easybilz-api.onrender.com';
+// const apiHostname = import.meta.env.VITE_API_HOSTNAME || 'http://127.0.0.1:9090';
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +27,7 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, remember_me: rememberMe }),
       });
 
       if (!response.ok) {
@@ -35,9 +37,15 @@ const Login = () => {
       const data = await response.json();
 
       // Handle successful login, e.g., set user session/token
-      console.log("Login successful:", data);
+      // console.log("Login successful:", data);
+      localStorage.setItem("authtoken", data.access_token);
+      localStorage.setItem("user", data.user_id);
+      localStorage.setItem("firstName", data.firstName);
+      // localStorage.setItem("middleName", data.middleName);
+      // localStorage.setItem("otherName", data.otherName);
       navigate("/reg-payment");
-      localStorage.setItem("token", data.token);
+
+     
 
     } catch (err) {
       setError("Invalid email or password. Please try again.");
@@ -109,7 +117,11 @@ const Login = () => {
                 </div>
                 <div className="container d-flex justify-content-between flex-wrap">
                   <div>
-                    <input type="checkbox" />
+                    <input 
+                      type="checkbox" 
+                      checked={rememberMe} 
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                    />
                     <span className="ms-2 rem">Remember me</span>
                   </div>
                   <div className="">

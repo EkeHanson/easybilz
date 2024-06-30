@@ -10,7 +10,7 @@ import "./App.css";
 // import ContactUs from './Components/ContactUs/Contact'
 // import Heropage from './Components/HeroSection/Heropage'
 // import Login from './Components/Loginpage/Login'
-// import Register from "./Components/Registration/Register";
+import Register from "./Components/Registration/Register";
 // import RegPayment from "./Components/RegPayment/RegPayment";
 import LoginAcount from './Components/LoginAccount/LoginAcount'
 // import Footer from "./Components/Footer/Footer";
@@ -24,12 +24,12 @@ function App() {
   {/* <Calltoaction/> */}
   {/* <ContactUs/> */}
     {/* <Faq/> */}
-  {/* <Register/> */}
+  <Register/>
   {/* <Review/> */}
   {/* <Services/> */}
   {/* <Stepper/> */}
   {/* <RegPayment/> */}
-  <LoginAcount/>
+  {/* <LoginAcount/> */}
   {/* <Outlet /> */}
     </div>
   );
